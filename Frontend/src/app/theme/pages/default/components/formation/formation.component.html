@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<div class="m-content">
+    <div class="m-portlet__body">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <a href="#" data-toggle="modal" data-target="#m_modal_1" class="btn btn-primary">
+                    <span>
+                        Ajouter  un Utilisateur
+                    </span>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <div class="m-input-icon m-input-icon--left">
+                    <input [(ngModel)]="filterbyemail" type="text" class="form-control" placeholder="Recherche par nom..." id="generalSearch">
+                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                            <span>
+                                <i class="la la-search"></i>
+                            </span>
+                        </span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="d-md-none m--margin-bottom-10"></div>
+    <br>
+    <div class="m-portlet m-portlet--mobile">
+                <div class="m-portlet__body">
+                    <table   class="table table-striped" [mfData]="data | filterbyemail : filterbyemail" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+                        <thead class="m-datatable__head" >
+                            <tr class="m-datatable__row" >
+                                <th style="width: 5%">
+                                    <mfDefaultSorter by="name">#</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="email">Pseudo</mfDefaultSorter>
+                                </th>
+                                <th style="width: 20%">
+                                    <mfDefaultSorter by="email">Email</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="email">Nom</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="email">Prénom</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="email">N°: Télèphone</mfDefaultSorter>
+                                </th>
+                                <th style="width: 10%">
+                                    <mfDefaultSorter by="email">Role</mfDefaultSorter>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="m-datatable__row" *ngFor="let item of mf.data">
+                                <td><a href="" class="m-nav__link"  data-toggle="modal" data-target="#m_modal_8" ><i class="flaticon-plus"></i> </a> </td>
+                                <td>{{item.username}}  </td>    
+                                <td>{{item.email}}  </td>  
+                                <td>{{item.last_name}}  </td>  
+                                <td>{{item.first_name}}  </td>  
+                                <td>{{item.phone}}  </td> 
+                                <td>{{item.roles}}  </td>  
+                                  
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+    </div>
+</div>
+<!--pop up add-->
+    <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Ajouter Utilisateur
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="m-form m-form--fit m-form--label-align-right">
+                    <div class="modal-body" >
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Nom:
+                            </label>
+                            <input [formControl]="first_name" type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Prénom:
+                            </label>
+                            <input [formControl]="last_name" type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                N° télèphone:
+                            </label>
+                            <input [formControl]="phone" type="number" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Email:
+                            </label>
+                            <input [formControl]="email" type="email" class="form-control" id="recipient-email">
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Pseudo:
+                            </label>
+                            <input [formControl]="username" type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Mot de passe:
+                            </label>
+                            <input [formControl]="password" type="password" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Confirmation Mot de passe:
+                            </label>
+                            <input [formControl]="plainpassword" type="password" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label">
+                                Roles:
+                            </label>
+                            <div class="m-form__control">
+                                <select [formControl]="roles" class="form-control m-input" id="m_form_type">
+                                    
+                                    <option value="ROLE_CLIENT">
+                                        Client
+                                    </option>
+                                    <option value="ROLE_ADMIN">
+                                        Admin
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Fermer
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                Envoyer
+                            </button>  
+                        </div>
+                    </div>
+                
+                </form>
+            </div>
+        </div>
+    </div>
+<!--pop up add-->
